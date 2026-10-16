@@ -56,7 +56,7 @@ public class Jugador {
         sb.append("nombreEquipo=").append(nombreEquipo);
         sb.append(", numerosJugadores=").append(numerosJugadores);
         sb.append(", patrocinador=").append(patrocinador);
-        sb.append(", partido=").append(partido);
+        sb.append(", partido=").append(partido == null ? null : partido.getLugarPartido());
         sb.append('}');
         return sb.toString();
     }

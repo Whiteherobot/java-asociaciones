@@ -56,7 +56,7 @@ public class Equipo{
         sb.append("faltasJugador=").append(faltasJugador);
         sb.append(", jugadorLesionado=").append(jugadorLesionado);
         sb.append(", jugadoresString=").append(jugadoresString);
-        sb.append(", partido=").append(partido);
+        sb.append(", partido=").append(partido == null ? null : partido.getLugarPartido());
         sb.append('}');
         return sb.toString();
     }

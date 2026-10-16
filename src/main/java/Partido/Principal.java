@@ -7,12 +7,12 @@ public class Principal {
         jugador.setNumerosJugadores(12);
         jugador.setPatrocinador("MichiCorp");
         System.out.println("El nombre del equipo es: " + jugador.getNombreEquipo());
-        System.out.println("El numero de jugadores que reprenta al equipo es: " + jugador.getNumerosJugadores());
-        System.out.println("El patrocinador de este partido es :"  + jugador.getPatrocinador());        
+        System.out.println("El número de jugadores que representa al equipo es: " + jugador.getNumerosJugadores());
+        System.out.println("El patrocinador de este partido es: "  + jugador.getPatrocinador());        
         var persona = new Partido();
         persona.setLugarPartido("Ecuador");
-        persona.setFechaPartido("Mañana 9:00 pm");
-        persona.setIntegrantes("......\n"+
+        persona.setFechaPartido("sábado a las 21:00");
+        persona.setIntegrantes("\n"+
                                "Hugo.\n" +
                                "Martín.\n" +
                                "Lucas.\n" +
@@ -22,14 +22,28 @@ public class Principal {
                                "Alejandro.\n" +
                                "Pablo.");
         
-        System.out.println("El lugar del patido sera en: " + persona.getLugarPartido());
-        System.out.println("La fecha del partido sera el: " + persona.getFechaPartido());
-        System.out.println("Los integrantes del partido son:" + persona.getIntegrantes());
+        System.out.println("El lugar del partido será en: " + persona.getLugarPartido());
+        System.out.println("La fecha del partido será: " + persona.getFechaPartido());
+        System.out.println("Los integrantes del partido son: " + persona.getIntegrantes());
         var equipo = new Equipo();
         equipo.setFaltasJugador(3);
         equipo.setJugadorLesionado(0);
-        System.out.println("las faltas que comete el equipo de papitas son: " + equipo.getFaltasJugador());
-        System.out.println("El numero de jugadores lesionados en este partido son: " + equipo.getJugadorLesionado());
+        equipo.setJugadoresString("Hugo, Martín, Lucas, Mateo, Leo, Daniel, Alejandro, Pablo");
+        System.out.println("Las faltas que comete el equipo de papitas son: " + equipo.getFaltasJugador());
+        System.out.println("El número de jugadores lesionados en este partido es: " + equipo.getJugadorLesionado());
+
+        // Asociación: el partido conoce a su equipo y a su jugador, y ellos al partido
+        persona.setEquipo(equipo);
+        persona.setJugador(jugador);
+        equipo.setPartido(persona);
+        jugador.setPartido(persona);
+        System.out.println();
+        System.out.println("Desde el partido en " + persona.getLugarPartido() + ":");
+        System.out.println("  Equipo: " + persona.getJugador().getNombreEquipo()
+                + ", patrocinado por " + persona.getJugador().getPatrocinador());
+        System.out.println("  Faltas del equipo: " + persona.getEquipo().getFaltasJugador());
+        System.out.println("Desde el equipo, el partido es el " + equipo.getPartido().getFechaPartido());
+        System.out.println(equipo);
         
 
         
