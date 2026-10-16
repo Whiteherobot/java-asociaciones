@@ -1,53 +1,75 @@
 # java-asociaciones
 
+[![CI](https://github.com/Whiteherobot/java-asociaciones/actions/workflows/ci.yml/badge.svg)](https://github.com/Whiteherobot/java-asociaciones/actions/workflows/ci.yml)
+
 Ejercicio 01.03 de Programación Orientada a Objetos (abril de 2022), hecho en
-grupo. El tema era la asociación entre clases: objetos que guardan una
-referencia a otros y pueden navegar entre ellos. Cada integrante armó su propio
-ejemplo:
+grupo. El tema era la asociación entre clases: objetos que guardan referencias
+a otros y se pueden recorrer en uno o ambos sentidos. Cada integrante armó un
+ejemplo en su propio paquete.
 
-- **Partido** (Michael): `Partido`, `Equipo` y `Jugador`. El partido conoce a su
-  equipo y a su jugador, y cada uno conoce el partido. Se ejecuta con `Principal`.
-  El patrocinador del equipo ya era "MichiCorp".
-- **Película** (Gabriela): `Pelicula`, `Actor` y `Personaje`. El actor sabe en qué
-  película sale y a qué personaje interpreta. Se ejecuta con `Principal_1`.
+## partido (Michael)
 
-## Ejecutar
+Un `Equipo` tiene su plantilla de `Jugador` y cada jugador sabe en qué equipo
+juega (uno a muchos, bidireccional). El equipo es el que crea el enlace, así que
+los dos lados nunca quedan desincronizados: un jugador no puede estar en dos
+equipos y dos jugadores no pueden tener el mismo número. Un `Partido` se juega
+entre un equipo local y uno visitante, en un lugar y una fecha.
 
-Con JDK 11 o superior y Maven:
+```
+PapitasCrew vs Los Cóndores · Estadio de Cuenca, Ecuador · sábado 23 de abril, 21:00
+
+PapitasCrew (patrocina MichiCorp)
+  1. Hugo
+  ...
+  5. Leo (lesionado)
+  Faltas: 3 · Disponibles: 7 de 8
+```
+
+## pelicula (Gabriela)
+
+Un `Actor` interpreta a un `Personaje` en una `Pelicula`. El personaje es el que
+une a los otros dos, así que una película tiene todo su reparto y un actor
+puede tener papeles en varias películas.
+
+```
+Harry Potter y la piedra filosofal (2001, Fantasía)
+  Harry Potter (Mago, Perseverante) · Daniel Radcliffe
+  Hermione Granger (Bruja, Inteligente) · Emma Watson
+  Ron Weasley (Mago, Leal) · Rupert Grint
+
+Películas de Daniel Radcliffe:
+  Harry Potter y la piedra filosofal (2001, Fantasía) · tenía 12 años
+  Harry Potter y la cámara secreta (2002, Fantasía) · tenía 13 años
+```
+
+## Cómo correrlo
+
+Necesitas JDK 17 o superior. El proyecto trae el wrapper de Maven.
 
 ```bash
-mvn compile
-java -cp target/classes Partido.Principal     # ejemplo del partido
-java -cp target/classes Partido.Principal_1   # ejemplo de la película
+./mvnw verify                                   # compila y corre las pruebas
+java -cp target/classes partido.Principal
+java -cp target/classes pelicula.Principal
 ```
 
-```
-Desde el partido en Ecuador:
-  Equipo: PapitasCrew, patrocinado por MichiCorp
-  Faltas del equipo: 3
-Desde el equipo, el partido es el sábado a las 21:00
-```
+Las pruebas verifican que las asociaciones queden consistentes en ambos sentidos
+y corren en GitHub Actions con Java 17 y 21.
 
-```
-Daniel Radcliffe interpreta a Harry Potter en "Harry Potter y la piedra filosofal" (2001).
-Desde la película, el protagonista es Daniel Radcliffe.
-```
+## Qué cambió desde la entrega
 
-## Notas
-
-En la entrega original las clases tenían los atributos de asociación, pero
-ningún `main` los usaba: cada objeto se creaba por separado. En 2026 se agregó
-el enlace entre objetos en los dos ejemplos y se corrigieron los `toString()`
-de `Equipo` y `Jugador`, que al asociarse se llamaban en círculo con el de
-`Partido` hasta producir un `StackOverflowError`. También se corrigieron
-mensajes (el año de nacimiento salía como "país de origen") y el `pom.xml`, que
-apuntaba a una clase de otro proyecto.
-
-Los nombres de las clases del partido quedaron como se entregaron, aunque
-`Jugador` guarda en realidad los datos del equipo (nombre, número de jugadores,
-patrocinador) y `Equipo` las estadísticas del partido.
+La versión de 2022 tenía los atributos de asociación, pero ningún objeto se
+enlazaba con otro. Además el modelo del partido estaba cruzado: `Jugador`
+guardaba el nombre del equipo y el patrocinador, y `Equipo` las faltas y los
+lesionados. Los `toString()` se llamaban en círculo y habrían terminado en
+`StackOverflowError` apenas se asociaran los objetos. En 2026 se reorganizaron
+las clases para que cada una tenga la responsabilidad que dice su nombre, se
+separaron los dos ejemplos en paquetes y se agregaron pruebas. Los nombres de los
+jugadores, el equipo PapitasCrew con su patrocinador y el ejemplo de Harry
+Potter vienen de la entrega original.
 
 ## Autores
 
 - Michael Lata ([@Whiteherobot](https://github.com/Whiteherobot))
 - Gabriela Rocano
+
+Licencia MIT.
